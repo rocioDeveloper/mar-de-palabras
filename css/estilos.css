@@ -1,0 +1,117 @@
+/* Estilos del Mar de palabras */
+* { box-sizing: border-box; }
+body { margin: 0; }
+
+/* Layout: un "escenario" marino a lo ancho arriba, controles debajo, y la lección en una columna de lectura de ~65ch. */
+:root {
+  --bg: #eef3f2;
+  --fg: #12262b;
+  --muted: #4d6469;
+  --line: #c9d8d6;
+  --panel: #ffffff;
+  --accent: #d9583b;      /* coral */
+  --code-bg: #e2ecea;
+  --sea-top: #0f3a47;
+  --sea-bottom: #03141a;
+  --foam: #dff4f1;
+  --font-display: "Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+  --font-sea: "Instrument Serif", Georgia, "Times New Roman", serif;
+  --font-body: "Literata", Georgia, serif;
+  --font-mono: "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0a1619; --fg: #dbe9e7; --muted: #8fa7a9; --line: #22393d;
+    --panel: #102227; --accent: #ff8a6b; --code-bg: #13292e;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0a1619; --fg: #dbe9e7; --muted: #8fa7a9; --line: #22393d;
+  --panel: #102227; --accent: #ff8a6b; --code-bg: #13292e;
+  color-scheme: dark;
+}
+body {
+  background: var(--bg); color: var(--fg);
+  font-family: var(--font-body); font-size: 17px; line-height: 1.6;
+}
+.wrap {
+  max-width: 1080px; margin: 0 auto;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 32px 64px;
+  display: flex; flex-direction: column; gap: 28px;
+}
+header h1 {
+  font-family: var(--font-display); font-weight: 700;
+  font-size: clamp(2rem, 5vw, 3.2rem); line-height: 1.05; margin: 0;
+  text-wrap: balance;
+}
+header p { margin: 8px 0 0; color: var(--muted); max-width: 62ch; }
+header a, .lesson a { color: var(--accent); }
+
+/* El mar */
+.sea {
+  position: relative; overflow: hidden; border-radius: 14px;
+  background: linear-gradient(180deg, var(--sea-top), var(--sea-bottom));
+  padding-block: 28px 36px;
+  min-height: 340px;
+}
+.row {
+  display: flex; gap: 0.6em; white-space: nowrap;
+  font-family: var(--font-sea); color: var(--foam);
+  font-size: clamp(20px, 3.2vw, 34px); line-height: 1.35;
+}
+.row:nth-child(even) { padding-left: 1.4em; }
+.word {
+  display: inline-block; cursor: pointer; user-select: none;
+  will-change: transform;
+}
+.word.it { font-style: italic; }
+.word:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
+
+/* Controles */
+.controls {
+  display: flex; flex-wrap: wrap; gap: 14px 22px; align-items: end;
+  font-family: var(--font-display); font-size: 14px;
+}
+.field { display: flex; flex-direction: column; gap: 4px; }
+.field label { color: var(--muted); text-transform: uppercase; letter-spacing: .06em; font-size: 12px; }
+select, button, input[type=range] { font: inherit; }
+select, button {
+  background: var(--panel); color: var(--fg); border: 1px solid var(--line);
+  border-radius: 8px; padding: 7px 12px;
+}
+button { cursor: pointer; font-weight: 500; }
+button.primary { background: var(--accent); color: #fff; border-color: transparent; }
+button:focus-visible, select:focus-visible, input:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.live {
+  font-family: var(--font-mono); font-size: 13px; color: var(--muted);
+  background: var(--code-bg); border-radius: 8px; padding: 10px 12px;
+  overflow-x: auto; white-space: pre; margin: 0;
+}
+
+/* Lección */
+.lesson { max-width: 68ch; display: flex; flex-direction: column; gap: 30px; }
+.lesson h2 {
+  font-family: var(--font-display); font-weight: 700; font-size: 1.6rem;
+  margin: 0 0 4px; text-wrap: balance;
+}
+.step h3 {
+  font-family: var(--font-display); font-weight: 700; font-size: 1.2rem;
+  margin: 0 0 6px; display: flex; gap: 10px; align-items: baseline;
+}
+.step h3 .n { color: var(--accent); font-variant-numeric: tabular-nums; }
+.step p { margin: 0 0 10px; }
+code { font-family: var(--font-mono); font-size: .86em; background: var(--code-bg); padding: 1px 5px; border-radius: 4px; }
+pre.code {
+  font-family: var(--font-mono); font-size: 13.5px; line-height: 1.55;
+  background: var(--code-bg); border-radius: 10px; padding: 14px 16px;
+  overflow-x: auto; margin: 0 0 10px;
+}
+pre.code code { background: none; padding: 0; font-size: inherit; }
+.c { color: var(--muted); }
+.tip { border-left: 3px solid var(--accent); padding: 2px 0 2px 14px; color: var(--muted); }
+.try { font-size: .95em; }
+.try strong { font-family: var(--font-display); }
+@media (prefers-reduced-motion: reduce) { .word { will-change: auto; } }
